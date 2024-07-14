@@ -26,6 +26,15 @@ const onDelete = async (id) => {
 }
 
 // TODO: 编辑功能
+// 思路：打开弹窗 -> 回填数据 -> 更新数据
+
+// 打卡弹窗
+// 回填数据
+const editRef = ref(null)
+const onEdit = (row) => {
+  editRef.value.open(row)
+}
+
 
 </script>
 
@@ -36,14 +45,14 @@ const onDelete = async (id) => {
       <el-table-column label="姓名" prop="name" width="150"></el-table-column>
       <el-table-column label="籍贯" prop="place"></el-table-column>
       <el-table-column label="操作" width="150">
-        <template #default="{row}">
-          <el-button type="primary" link>编辑</el-button>
+        <template #default="{ row }">
+          <el-button type="primary" @click="onEdit(row)">编辑</el-button>
           <el-button type="danger" @click="onDelete(row.id)" link>删除</el-button>
         </template>
       </el-table-column>
     </el-table>
   </div>
-  <Edit />
+  <Edit ref="editRef" @on-update="getList" />
 </template>
 
 <style scoped>
